@@ -21,9 +21,11 @@ class AccountDAO {
 
     getEmployees() {
         return new Promise((resolve, reject) => {
-            Account.find({ $or: [
-                { accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' }, 
-                { accountType: 'AssistantDriver' }] }, function (error, accounts) {
+            Account.find({
+                $or: [
+                    { accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' },
+                    { accountType: 'AssistantDriver' }]
+            }, function (error, accounts) {
                 if (error)
                     reject(error);
 
@@ -35,9 +37,13 @@ class AccountDAO {
 
     searchCustomers(keyword) {
         return new Promise((resolve, reject) => {
-            Account.find({ $and: [{ accountType: 'Customer' }, { $or: [
-                { fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, 
-                { phone: { $regex: keyword, $options: "i" } }] }] }, function (error, accounts) {
+            Account.find({
+                $and: [{ accountType: 'Customer' }, {
+                    $or: [
+                        { fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } },
+                        { phone: { $regex: keyword, $options: "i" } }]
+                }]
+            }, function (error, accounts) {
                 if (error)
                     reject(error);
 
@@ -48,15 +54,17 @@ class AccountDAO {
 
     searchEmployees(keyword) {
         return new Promise((resolve, reject) => {
-            Account.find({ $and: [
-                { $or: [{ accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' }, { accountType: 'AssistantDriver' }] }, 
-                { $or: [{ fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, { phone: { $regex: keyword, $options: "i" } }] }] }, 
+            Account.find({
+                $and: [
+                    { $or: [{ accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' }, { accountType: 'AssistantDriver' }] },
+                    { $or: [{ fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, { phone: { $regex: keyword, $options: "i" } }] }]
+            },
                 function (error, accounts) {
-                if (error)
-                    reject(error);
+                    if (error)
+                        reject(error);
 
-                resolve(multipleMongooseToObject(accounts));
-            });
+                    resolve(multipleMongooseToObject(accounts));
+                });
         });
     }
 
@@ -131,6 +139,55 @@ class AccountDAO {
                     resolve(new QueryResult('Success', mongooseToObject(account)));
                 else
                     resolve(new QueryResult('NotFound', null));
+            });
+        });
+    }
+
+    getAllTickets() {
+        return new Promise((resolve, reject) => {
+            Account.aggregate([{ $unwind: "$Tickets" }, {
+                $project: {
+                    _id: 0, fullname: 1, email: 1, phone: 1, CoachTrip: "$Tickets.CoachTrip", TicketDetail: "$Tickets.TicketDetail",
+                    Payment: "$Tickets.Payment", coachTicketId: "$Tickets.coachTicketId", createdAt: "$Tickets.createdAt",
+                    updatedAt: "$Tickets.updatedAt"
+                }
+            }], function (error, tickets) {
+                if (error)
+                    reject(error);
+
+                for (let ticket of tickets) {
+                    ticket.Customer = { customerName: ticket.fullname, email: ticket.email, phone: ticket.phone };
+                    delete ticket.fullname;
+                    delete ticket.email;
+                    delete ticket.phone;
+                }
+                resolve(tickets);
+            });
+        });
+    }
+
+    getTicketByTicketId(ticketId) {
+        return new Promise((resolve, reject) => {
+            Account.aggregate([{ $unwind: "$Tickets" }, {
+                $project: {
+                    _id: 0, fullname: 1, email: 1, phone: 1, CoachTrip: "$Tickets.CoachTrip", TicketDetail: "$Tickets.TicketDetail",
+                    Payment: "$Tickets.Payment", coachTicketId: "$Tickets.coachTicketId", createdAt: "$Tickets.createdAt",
+                    updatedAt: "$Tickets.updatedAt"
+                }
+            }, { $match: { coachTicketId: ticketId } }], function (error, tickets) {
+                if (error) {
+                    reject(error);
+                } else if (tickets.length > 0) {
+                    let ticket = tickets[0];
+                    ticket.Customer = { customerName: ticket.fullname, email: ticket.email, phone: ticket.phone };
+                    delete ticket.fullname;
+                    delete ticket.email;
+                    delete ticket.phone;
+
+                    resolve(new QueryResult('Success', ticket));
+                } else {
+                    resolve(new QueryResult('NotFound', null));
+                }
             });
         });
     }

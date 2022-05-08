@@ -56,65 +56,40 @@ class CoachTripDAO {
                     reject(error);
                 } else if (coachTrip) {
                     let seatNumber = coachTrip.Coach.seatNumber;
-                    const availableSeatPositionList = new Array(seatNumber);
-                    let count = 0;
+                    Account.aggregate([ { $unwind: "$Tickets" }, { $group: { _id: "$Tickets.CoachTrip.coachTripId", 
+                            seatPositions: { $addToSet: "$Tickets.TicketDetail.seatPosition" } } },
+                        { $match: { _id: coachTripId } }], function (error2, rawResult) {
+                        if (error2)
+                            reject(error2);
+                        
+                        let availableSeatPositionList = null;
+                        let count = 0;
+                        if(rawResult.length > 0){
+                            console.log(rawResult);
+                            let seatPositionList = rawResult[0].seatPositions;
+                            availableSeatPositionList = new Array(seatNumber - seatPositionList.length);
 
-                    for (let i = 1; i <= seatNumber; i++) {
-                        Account.count({ $and: [ 
-                            { "Tickets.CoachTrip.coachTripId": coachTripId }, 
-                            { "Tickets.TicketDetail.seatPosition": i } 
-                        ]}, function(error, result){
-                            if (error)
-                                reject(error);
+                            for (let i = 1; i <= seatNumber; i++) {
+                                let checkExists = false;
+                                for (let seatPosition of seatPositionList) {    
+                                    if (parseInt(seatPosition) === i)
+                                        checkExists = true;
+                                }
+                                if(!checkExists)
+                                    availableSeatPositionList[count++] = i;
+                            }
+                        }else{
+                            availableSeatPositionList = new Array(seatNumber);
 
-                            if(result == 0)
+                            for (let i = 1; i <= seatNumber; i++) {
                                 availableSeatPositionList[count++] = i;
-                        });                        
-                    }
-
-                    resolve(new QueryResult('Success', availableSeatPositionList));
-
-                    // CoachTicket.find({ 'CoachTrip.coachTripId': coachTripId }, function (error2, coachTickets) {
-                    //     if (error2)
-                    //         reject(error2);
-
-                    //     let availableSeatPositionList = new Array(seatNumber - coachTickets.length);
-                    //     let count = 0;
-                    //     if (coachTickets.length > 0) {
-                    //         for (let i = 1; i <= seatNumber; i++) {
-                    //             let checkExists = false;
-                    //             for (let coachTicket of coachTickets) {    
-                    //                 if (parseInt(coachTicket.TicketDetail.seatPosition) === i)
-                    //                     checkExists = true;
-                    //             }
-                    //             if(!checkExists)
-                    //                 availableSeatPositionList[count++] = i;
-                    //         }
-                    //     } else {
-                    //         for (let i = 1; i <= seatNumber; i++) {
-                    //             availableSeatPositionList[count++] = i;
-                    //         }
-                    //     }
-
-                    //     resolve(new QueryResult('Success', availableSeatPositionList));
-                    // });
+                            }
+                        }
+                        resolve(new QueryResult('Success', availableSeatPositionList));
+                    });
                 } else {
                     resolve(new QueryResult('NotFound', null));
                 }
-            });
-        });
-    }
-
-    checkAvailableSeatPosition(coachTripId, seatPosition){
-        return new Promise((resolve, reject) => {
-            Account.count({ $and: [ 
-                { "Tickets.CoachTrip.coachTripId": coachTripId }, 
-                { "Tickets.TicketDetail.seatPosition": seatPosition } 
-            ]}, function(error, result){
-                if (error)
-                    reject(error);
-                
-                resolve(result == 0);
             });
         });
     }

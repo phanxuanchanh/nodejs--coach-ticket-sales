@@ -7,8 +7,8 @@ const mailUtility = require('../utilities/mail_utility');
 class CoachTicketController {
 
     index(req, res) {
-        if(!req.session.admin)
-            return res.redirect('/employee/sign-in');
+        // if(!req.session.admin)
+        //     return res.redirect('/employee/sign-in');
 
         let status = null;
         if (req.query.status === 'NotFound')
@@ -20,7 +20,7 @@ class CoachTicketController {
         else
             status = null;
 
-        coachTicketDAO.getCoachTickets().then(coachTickets => res.render('./admin/coach-ticket-management/index', {
+        accountDAO.getAllTickets().then(coachTickets => res.render('./admin/coach-ticket-management/index', {
             layout: 'admin',
             pageName: 'Danh sách vé xe',
             status: status,
@@ -30,10 +30,10 @@ class CoachTicketController {
     };
 
     detail(req, res) {
-        if(!req.session.admin)
-            return res.redirect('/employee/sign-in');
+        // if(!req.session.admin)
+        //     return res.redirect('/employee/sign-in');
 
-        coachTicketDAO.getCoachTicket(req.params.coachTicketId).then(queryResult => {
+        accountDAO.getTicketByTicketId(req.params.coachTicketId).then(queryResult => {
             if (queryResult.status === 'NotFound')
                 return res.redirect('/admin/coach-ticket-management/list');
 
@@ -49,7 +49,7 @@ class CoachTicketController {
         if(!req.session.admin)
             return res.redirect('/employee/sign-in');
 
-        coachTicketDAO.getCoachTicket(req.params.coachTicketId).then(queryResult => {
+        accountDAO.getTicketByTicketId(req.params.coachTicketId).then(queryResult => {
             if (queryResult.status === 'NotFound')
                 return res.redirect('/admin/coach-ticket-management/list');
 
@@ -62,8 +62,8 @@ class CoachTicketController {
     }
 
     getAvailableSeatPositionList(req, res){
-        if(!req.session.admin)
-            return res.redirect('/employee/sign-in');
+        /*if(!req.session.admin)
+            return res.redirect('/employee/sign-in');*/
 
         coachTripDAO.getAvailableSeatPositionList(req.params.coachTripId).then(queryResult => {
             if(queryResult.status === 'NotFound')

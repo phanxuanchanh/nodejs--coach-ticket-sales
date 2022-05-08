@@ -1,4 +1,3 @@
-const Employeee = require('../models/employee');
 const bcrypt = require('bcrypt');
 const accountDAO = require('../dao/account-dao');
 const mailUtility = require('../utilities/mail_utility');
