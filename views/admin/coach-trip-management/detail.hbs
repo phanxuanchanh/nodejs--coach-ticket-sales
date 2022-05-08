@@ -1,0 +1,120 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Thông tin tuyến xe: "{{coachTrip.name}}"</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 order-2 order-md-1">
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Mã chuyến xe:</span>
+                                <span class="info-box-number text-center text-muted mb-0">{{coachTrip.coachTripId}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Tên chuyến xe:</span>
+                                <span class="info-box-number text-center text-muted mb-0">{{coachTrip.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Thời gian đi:</span>
+                                <span
+                                    class="info-box-number text-center text-muted mb-0">{{coachTrip.departureTime}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Thời gian đến:</span>
+                                <span
+                                    class="info-box-number text-center text-muted mb-0">{{coachTrip.destinationTime}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Trạng thái chuyến:</span>
+                                {{#if coachTrip.status}}
+                                    <span class="info-box-number text-center text-muted mb-0">Đã hoàn thành chuyến</span>
+                                {{else}}
+                                    <span class="info-box-number text-center text-muted mb-0">Chưa khởi hành</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="m-3 text-success">Thông tin tuyến đường</h4>
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <div class="info-box bg-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Tên tuyến:</span>
+                        <span class="info-box-number text-center text-muted mb-0">{{coachTrip.Route.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="info-box bg-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Giá cố định:</span>
+                        <span class="info-box-number text-center text-muted mb-0">{{coachTrip.Route.price}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="m-3 text-success">Thông tin xe</h4>
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <div class="info-box bg-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Tên xe:</span>
+                        <span class="info-box-number text-center text-muted mb-0">{{coachTrip.Coach.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="info-box bg-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Biển số xe:</span>
+                        <span
+                            class="info-box-number text-center text-muted mb-0">{{coachTrip.Coach.licensePlate}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="info-box bg-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Số ghế ngồi:</span>
+                        <span class="info-box-number text-center text-muted mb-0">{{coachTrip.Coach.seatNumber}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="/admin/coach-trip-management/list" class="btn btn-primary">Quay về danh sách</a>
+        <a href="/admin/coach-trip-management/edit/{{coachTrip.coachTripId}}" class="btn btn-success">Chỉnh sửa</a>
+    </div>
+</div>

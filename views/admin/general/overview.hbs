@@ -1,0 +1,101 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3 id="coachTripNumber">0</h3>
+                    <p>Số lượng chuyến xe</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3 id="employeeNumber">0</h3>
+                    <p>Số lượng nhân viên</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3 id="customerNumber">0</h3>
+                    <p>Số lượng khách hàng</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3 id="coachTicketNumber">0</h3>
+                    <p>Số lượng vé</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function loadCustomerNumber(){
+        $(document).ready(function(e){
+            $.get('/admin/customer-management/count', function(data){
+                document.querySelector('#customerNumber').innerText = data.customerNumber;
+            });
+        });
+    }
+
+    function loadEmployeeNumber(){
+        $(document).ready(function(e){
+            $.get('/admin/employee-management/count', function(data){
+                document.querySelector('#employeeNumber').innerText = data.employeeNumber;
+            });
+        });
+    }
+
+    function loadCoachTicketNumber(){
+        $(document).ready(function(e){
+            $.get('/admin/coach-ticket-management/count', function(data){
+                document.querySelector('#coachTicketNumber').innerText = data.coachTicketNumber;
+            });
+        });
+    }
+
+    function loadCoachTripNumber(){
+        $(document).ready(function(e){
+            $.get('/admin/coach-trip-management/count', function(data){
+                document.querySelector('#coachTripNumber').innerText = data.coachTripNumber;
+            });
+        });
+    }
+
+    function loadBasicStats(){
+        loadCustomerNumber();
+        loadEmployeeNumber();
+        loadCoachTripNumber();
+        loadCoachTicketNumber();
+    }
+
+    setTimeout(function(){
+        loadBasicStats();
+        setInterval(loadBasicStats, 10000);
+    }, 3000);
+
+</script>

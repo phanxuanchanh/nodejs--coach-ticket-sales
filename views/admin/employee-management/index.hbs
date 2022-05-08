@@ -1,0 +1,90 @@
+{{#if status}}
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="removeQueryString();">×</button>
+                <h5><i class="icon fas fa-check"></i> {{status}}</h5>
+            </div>
+        </div>
+    </div>
+{{/if}}
+
+<!-- Default box -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Projects</h3>
+        <div class="card-tools">
+            <a class="btn btn-primary" href="/admin/employee-management/create">Tạo mới nhân viên</a>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">
+                        #
+                    </th>
+                    <th style="width: 20%;">
+                        Tên nhân viên
+                    </th>
+                    <th style="width: 20%;">
+                        Trạng thái kích hoạt
+                    </th>
+                    <th style="width: 10%;">
+                        Chức danh
+                    </th>
+                    <th style="width: 30%; text-align: center;">Công cụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each employees}}
+                <tr>
+                    <td>
+                        {{this.accountId}}
+                    </td>
+                    <td>
+                        {{this.fullname}}
+                    </td>
+                    <td>
+                        {{#if this.isActivated}}
+                            Đã xác minh
+                        {{else}}
+                            Chưa xác minh
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{this.accountType}}
+                    </td>
+                    <td class="project-actions text-right">
+                        <form id="deleteEmployee_{{this.accountId}}" action="/admin/employee-management/delete/{{this.accountId}}" method="POST">
+                            <input type="hidden" name="accountId" value="{{this.accountId}}">
+                        </form>
+                        <a class="btn btn-success btn-sm" href="/admin/employee-management/detail/{{this.accountId}}">
+                            <i class="fas fa-folder"></i> Chi tiết
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="/admin/employee-management/edit/{{this.accountId}}">
+                            <i class="fas fa-pencil-alt"></i> Sửa
+                        </a>
+                        <button type="submit" form="deleteEmployee_{{this.accountId}}" class="btn btn-danger btn-sm"><i
+                                class="fas fa-trash"></i> Xóa</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<script type="text/javascript">
+    function removeQueryString(){
+        location.href = '/admin/employee-management/list'
+    }
+</script>

@@ -1,0 +1,8 @@
+#Node modules
+node_modules/
+
+#mongodb-files
+mongodb-files/
+
+#.env
+.env

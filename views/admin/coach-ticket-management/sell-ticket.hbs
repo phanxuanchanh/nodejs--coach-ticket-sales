@@ -1,0 +1,386 @@
+{{#if status}}
+<div class="row">
+    <div class="col">
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-check"></i> {{status}}</h5>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="POST" action="/admin/coach-ticket-management/sell-ticket">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm chuyến xe</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card bg-light">
+                        <div class="card-header bg-success">
+                            <p class="text-center m-1">Thông tin khách hàng</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-8 col-lg-8">
+                                        <label for="searchCustomer">Tìm kiếm khách hàng</label>
+                                        <input type="text" class="form-control mt-1 mb-1" id="searchCustomer"
+                                            name="searchCustomer" placeholder="Tìm kiếm khách hàng" />
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4 text-center"
+                                        style="background-color: #BCD7FF;">
+                                        <label>Tạo mới khách hàng</label><br />
+                                        <a href="/admin/customer-management/create" target="_blank"
+                                            class="btn btn-light mt-1 mb-1">Tạo mới</a>
+                                    </div>
+                                    <hr style="background-color: red;" />
+                                </div>
+                                <div class="row mt-2 ml-1" style="height: 125px; border: 1px solid; overflow: scroll;">
+                                    <div class="col">
+                                        <ul id="customerList">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="customerId" name="Customer.customerId" />
+                            <div class="form-group">
+                                <label for="Customer.customerName">Tên khách hàng</label>
+                                <input type="text" class="form-control" placeholder="Tên khách hàng" id="customerName"
+                                    name="Customer.customerName" required readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="Customer.phone">Số điện thoại</label>
+                                <input type="tel" class="form-control" placeholder="Số điện thoại" id="customerPhone"
+                                    name="Customer.phone" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="Customer.email">Email</label>
+                                <input type="text" class="form-control" placeholder="Email" id="customerEmail"
+                                    name="Customer.email" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light">
+                        <div class="card-header bg-success">
+                            <p class="text-center m-1">Thông tin chuyến xe</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-8 col-lg-8">
+                                        <label for="searchCustomer">Tìm kiếm chuyến xe</label>
+                                        <input type="text" class="form-control mt-1 mb-1" id="searchCoachTrip"
+                                            name="searchCoachTrip" placeholder="Tìm kiếm chuyến xe" />
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4 text-center"
+                                        style="background-color: #BCD7FF;">
+                                        <label>Tạo mới chuyến xe</label><br />
+                                        <a href="/admin/coach-trip-management/create" target="_blank"
+                                            class="btn btn-light mt-1 mb-1">Tạo mới</a>
+                                    </div>
+                                    <hr style="background-color: red;" />
+                                </div>
+                                <div class="row mt-2 ml-1" style="height: 125px; border: 1px solid; overflow: scroll;">
+                                    <div class="col">
+                                        <ul id="coachTripList">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="coachTripId" name="CoachTrip.coachTripId" />
+                            <div class="form-group">
+                                <label for="CoachTrip.coachTripName">Tên chuyến</label>
+                                <input type="text" class="form-control" placeholder="Tên chuyến" id="coachTripName"
+                                    name="CoachTrip.coachTripName" required readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="CoachTrip.departureTime">Thời gian đi</label>
+                                <input type="tel" class="form-control" placeholder="Thời gian đi" id="departureTime"
+                                    name="CoachTrip.departureTime" required readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="CoachTrip.destinationTime">Thời gian đến</label>
+                                <input type="text" class="form-control" placeholder="Thời gian đến" id="destinationTime"
+                                    name="CoachTrip.destinationTime" required readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="CoachTrip.licensePlate">Biển số xe</label>
+                                <input type="text" class="form-control" placeholder="Biển số xe" id="licensePlate"
+                                    name="CoachTrip.licensePlate" required readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light">
+                        <div class="card-header bg-success">
+                            <p class="text-center m-1">Thông tin nhân viên</p>
+                        </div>
+                        <div class="card-body">
+                            <input type="hidden" id="employeeId" name="Employee.employeeId"
+                                value="{{adminInfo.adminId}}" />
+                            <div class="form-group">
+                                <label for="Employee.employeeName">Tên nhân viên</label>
+                                <input type="text" class="form-control" placeholder="Tên nhân viên" id="employeeName"
+                                    name="Employee.employeeName" value="{{adminInfo.fullname}}" required readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light">
+                        <div class="card-header bg-success">
+                            <p class="text-center m-1">Thông tin vé xe</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="TicketDetail.seatPositions">Chọn ghế ngồi</label>
+                                <select class="form-control mb-2" name="selectSeatPosition" id="selectSeatPosition"
+                                    onchange="selectSeat();"></select>
+                                <input type="text" class="form-control" placeholder="Chọn ghế ngồi" id="seatPosition"
+                                    name="TicketDetail.seatPosition" required readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="TicketDetail.price">Giá vé cố định</label>
+                                <input type="number" class="form-control" placeholder="Giá vé" id="price"
+                                    name="TicketDetail.price" value="0" required readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="TicketDetail.subCharge">Phụ thu</label>
+                                <input type="number" class="form-control" placeholder="Phụ thu" id="subCharge"
+                                    name="TicketDetail.subCharge" value="0" />
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Ghi chú</label>
+                                <input type="text" class="form-control" placeholder="Ghi chú" id="note"
+                                    name="TicketDetail.note" />
+                            </div>
+                            <div class="form-group">
+                                <label for="TicketDetail.totalMoney">Tổng tiền</label>
+                                <input type="number" class="form-control" placeholder="Tổng tiền" id="totalMoney"
+                                    name="TicketDetail.totalMoney" value="0" required readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light">
+                        <div class="card-header bg-success">
+                            <p class="text-center m-1">Thông tin thanh toán</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Payment.paymentMethod">Phương thức thanh toán</label>
+                                <select name="Payment.paymentMethod" class="form-control">
+                                    <option value="Bank transfer">Chuyển khoản ngân hàng</option>
+                                    <option value="Visa">Thẻ visa</option>
+                                    <option value="Mastercard">Thẻ mastercard</option>
+                                    <option value="Momo">Ví điện tử Momo</option>
+                                    <option value="Cash">Tiền mặt, thanh toán trực tiếp</option>
+                                    <option value="Postpaid">Trả sau, trả khi lên xe</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Payment.status">Trạng thái thanh toán</label>
+                                <select name="Payment.status" class="form-control">
+                                    <option value="Success">Thành công</option>
+                                    <option value="Failed">Thất bại</option>
+                                    <option value="Waiting">Đang chờ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Payment.transactionContent">Thông tin giao dịch</label>
+                                <input type="text" class="form-control" placeholder="Thông tin giao dịch"
+                                    id="transactionContent" name="Payment.transactionContent" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success">Lập vé</button>
+                    <a href="/admin/coach-ticket-management/list" class="btn btn-primary">Quay về danh sách</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let customer_keyword_old = '';
+    let coachTrip_keyword_old = '';
+
+    function resetSeletedCustomer() {
+        let customerList = document.querySelector('#customerList');
+        let nodes = customerList.childNodes;
+        for (let node of nodes) {
+            node.style = 'color: black;';
+        }
+
+        document.querySelector('#customerId').value = '';
+        document.querySelector('#customerName').value = '';
+        document.querySelector('#customerPhone').value = '';
+        document.querySelector('#customerEmail').value = '';
+    }
+
+    function resetSeletedCoachTrip() {
+        let coachTripList = document.querySelector('#coachTripList');
+        let nodes = coachTripList.childNodes;
+        for (let node of nodes) {
+            node.style = 'color: black;';
+        }
+
+        document.querySelector('#coachTripId').value = '';
+        document.querySelector('#coachTripName').value = '';
+        document.querySelector('#departureTime').value = '';
+        document.querySelector('#destinationTime').value = '';
+        document.querySelector('#licensePlate').value = '';
+    }
+
+    function selectCustomer(customerId) {
+        resetSeletedCustomer();
+
+        let customer = document.getElementById(`${customerId}`);
+        customer.style = "color: red;";
+
+        let items = customer.innerText.split(' - ');
+        document.querySelector('#customerId').value = customerId;
+        document.querySelector('#customerName').value = items[0];
+        document.querySelector('#customerPhone').value = items[1];
+        document.querySelector('#customerEmail').value = items[2];
+    }
+
+    function selectCoachTrip(coachTripId) {
+        resetSeletedCoachTrip();
+
+        let coachTrip = document.getElementById(`${coachTripId}`);
+        coachTrip.style = "color: red;";
+
+        let items = coachTrip.innerText.split(' - ');
+        document.querySelector('#coachTripId').value = coachTripId;
+        document.querySelector('#coachTripName').value = items[0];
+        document.querySelector('#departureTime').value = items[1];
+        document.querySelector('#destinationTime').value = items[2];
+        document.querySelector('#licensePlate').value = items[3]
+    }
+
+    function searchCustomer(keyword) {
+        $(document).ready(function (e) {
+            $.get(`/admin/customer-management/search-customers?keyword=${keyword}`, function (data) {
+                let customerList = document.querySelector('#customerList');
+                customerList.innerHTML = '';
+                for (let customer of data)
+                    customerList.innerHTML += `<li id="${customer.customerId}" onclick="selectCustomer('${customer.customerId}');">${customer.fullname} - ${customer.phone} - ${customer.email}</li>`;
+            });
+        });
+    }
+
+    function searchCoachTrip(keyword) {
+        $(document).ready(function (e) {
+            $.get(`/admin/coach-trip-management/search-coach-trips?keyword=${keyword}`, function (data) {
+                let coachTripList = document.querySelector('#coachTripList');
+                coachTripList.innerHTML = '';
+                for (let coachTrip of data)
+                    coachTripList.innerHTML += `<li id="${coachTrip.coachTripId}" onclick="selectCoachTrip('${coachTrip.coachTripId}');">${coachTrip.name} - ${coachTrip.departureTime_formatted} - ${coachTrip.destinationTime_formatted} - ${coachTrip.Coach.licensePlate}</li>`;
+            });
+        });
+    }
+
+    function loadAvailableSeatPositionList(coachTripId) {
+        $(document).ready(function (e) {
+            $.get(`/admin/coach-ticket-management/get-available-seat-position-list/${coachTripId}`, function (data) {
+                let selectSeatPosition = document.querySelector('#selectSeatPosition');
+
+                if (data === 'NotFound') {
+                    alert('Không thể lấy danh sách chỗ ngồi khả dụng');
+                } else {
+                    while (selectSeatPosition.firstChild) {
+                        selectSeatPosition.removeChild(selectSeatPosition.lastChild);
+                    }
+
+                    for (item of data) {
+                        let node = document.createElement('option');
+                        node.value = item;
+                        node.innerText = `Ghế số ${item}`;
+                        selectSeatPosition.appendChild(node);
+                    }
+                }
+            });
+        });
+    }
+
+    function loadCoachTripPrice(coachTripId) {
+        $(document).ready(function (e) {
+            $.get(`/admin/coach-trip-management/get-coach-trip-price/${coachTripId}`, function (data) {
+                let selectSeatPosition = document.querySelector('#selectSeatPosition');
+
+                if (data === 'NotFound')
+                    alert('Không thể lấy giá vé');
+                else
+                    document.querySelector('#price').value = data.price;
+            });
+        });
+    }
+
+    function selectSeat() {
+        let selectedSeatPosition = document.querySelector('#selectSeatPosition').value;
+        document.querySelector('#seatPosition').value = selectedSeatPosition;
+    }
+
+    setInterval(function (e) {
+        let keyword = document.querySelector('#searchCustomer').value;
+        if (keyword === '')
+            document.querySelector('#customerList').innerHTML = '';
+
+        if (keyword !== customer_keyword_old && keyword !== '') {
+            customer_keyword_old = keyword;
+            searchCustomer(keyword);
+        }
+    }, 500);
+
+    setInterval(function (e) {
+        let keyword = document.querySelector('#searchCoachTrip').value;
+        if (keyword === '')
+            document.querySelector('#coachTripList').innerHTML = '';
+
+        if (keyword !== coachTrip_keyword_old && keyword !== '') {
+            coachTrip_keyword_old = keyword;
+            searchCoachTrip(keyword);
+        }
+    }, 500);
+
+    function LoadSeatPositionListAndCoachTripPrice2() {
+        let coachTripId = document.querySelector('#coachTripId');
+        if (coachTripId.value) {
+            loadAvailableSeatPositionList(coachTripId.value);
+            loadCoachTripPrice(coachTripId.value);
+        }
+    }
+
+    function LoadSeatPositionListAndCoachTripPrice1() {
+        let coachTripId = document.querySelector('#coachTripId');
+        if (coachTripId.value) {
+            loadAvailableSeatPositionList(coachTripId.value);
+            loadCoachTripPrice(coachTripId.value);
+            clearInterval(timer);
+            timer = setInterval(LoadSeatPositionListAndCoachTripPrice2, 5000);
+        }
+    }
+
+    let timer = setInterval(LoadSeatPositionListAndCoachTripPrice1, 500);
+
+    setInterval(function (e) {
+        let price = document.querySelector('#price');
+        let subCharge = document.querySelector('#subCharge');
+
+        if (subCharge.value !== '')
+            document.querySelector('#totalMoney').value = parseFloat(price.value) + parseFloat(subCharge.value);
+        else
+            subCharge.value = 0;
+    }, 800);
+
+</script>

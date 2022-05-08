@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Thông tin nhân viên: "{{employee.fullname}} ({{employee.username}})"</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 order-2 order-md-1">
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Mã nhân viên:</span>
+                                <span class="info-box-number text-center text-muted mb-0">{{employee.accountId}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Tên người dùng:</span>
+                                <span class="info-box-number text-center text-muted mb-0">{{employee.username}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Tên đầy đủ:</span>
+                                <span
+                                    class="info-box-number text-center text-muted mb-0">{{employee.fullname}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Giới tính:</span>
+                                <span
+                                    class="info-box-number text-center text-muted mb-0">{{employee.gender}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Ngày sinh:</span>
+                                <span
+                                    class="info-box-number text-center text-muted mb-0">{{employee.birthday}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Chức danh:</span>
+                                <span
+                                    class="info-box-number text-center text-muted mb-0">{{employee.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <a href="/admin/employee-management/list" class="btn btn-primary">Quay về danh sách</a>
+        <a href="/admin/employee-management/edit/{{coachTrip.coachTripId}}" class="btn btn-success">Chỉnh sửa</a>
+    </div>
+</div>

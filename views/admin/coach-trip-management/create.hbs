@@ -1,0 +1,139 @@
+{{#if status}}
+<div class="row">
+    <div class="col">
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-check"></i> {{status}}</h5>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="POST" action="/admin/coach-trip-management/create">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm chuyến xe</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Tên chuyến xe</label>
+                        <input type="text" class="form-control" placeholder="Tên chuyến" id="name" name="name"
+                            readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="departureTime">Thời gian đi</label>
+                        <input type="text" class="form-control" placeholder="Thời gian đi" id="departureTime"
+                            name="departureTime" readonly />
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <input type="date" class="form-control" placeholder="Thời gian đi"
+                                    id="departureTime_date" name="departureTime_date" />
+                            </div>
+                            <div class="col-6">
+                                <input type="time" class="form-control col-6" placeholder="Thời gian đi"
+                                    id="departureTime_time" name="departureTime_time" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="destinationTime">Thời gian đến</label>
+                        <input type="text" class="form-control" placeholder="Tên chuyến" id="destinationTime"
+                            name="destinationTime" readonly />
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <input type="date" class="form-control" placeholder="Thời gian đi"
+                                    id="destinationTime_date" name="destinationTime_date" />
+                            </div>
+                            <div class="col-6">
+                                <input type="time" class="form-control col-6" placeholder="Thời gian đi"
+                                    id="destinationTime_time" name="destinationTime_time" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Coach.name">Tên xe</label>
+                                <input type="text" class="form-control" placeholder="Tên xe" id="coachName"
+                                    name="Coach.name" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="Coach.seatNumber">Số ghế ngồi</label>
+                                <input type="number" class="form-control" placeholder="Số ghế ngồi" id="coachSeatNumber"
+                                    name="Coach.seatNumber" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="Coach.licensePlate">Biển số xe</label>
+                                <input type="text" class="form-control" placeholder="Biển số xe" id="coachLicensePlate"
+                                    name="Coach.licensePlate" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Route.name">Tên tuyến đường</label>
+                                <input type="text" class="form-control" placeholder="Tên tuyến đường" id="routeName"
+                                    name="Route.name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="Route.price">Giá tiền</label>
+                                <input type="text" class="form-control" placeholder="Giá tiền" name="Route.price"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success">Tạo mới</button>
+                    <a href="/admin/coach-trip-management/list" class="btn btn-primary">Quay về danh sách</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let departureTime_time = document.querySelector('#departureTime_time');
+
+    departureTime_time.addEventListener('change', updateDepartureTime);
+
+    function updateDepartureTime(e) {
+        let departureTime_date = document.querySelector('#departureTime_date');
+        document.querySelector('#departureTime').value = `${departureTime_date.value} ${departureTime_time.value}:00`;
+    }
+
+    let destinationTime_time = document.querySelector('#destinationTime_time');
+
+    destinationTime_time.addEventListener('change', updateDestinationTime);
+
+    function updateDestinationTime(e) {
+        let destinationTime_date = document.querySelector('#destinationTime_date');
+        document.querySelector('#destinationTime').value = `${destinationTime_date.value} ${destinationTime_time.value}:00`;
+    }
+
+    let coachLicensePlate = document.querySelector('#coachLicensePlate');
+
+    coachLicensePlate.addEventListener('change', updateCoachName);
+
+    function updateCoachName(e) {
+        let coachSeatNumber = document.querySelector('#coachSeatNumber');
+        document.querySelector('#coachName').value = `Xe ${coachLicensePlate.value} (${coachSeatNumber.value})`;
+    }
+
+    let routeName = document.querySelector('#routeName');
+
+    routeName.addEventListener('change', updateCoachTripName);
+
+    function updateCoachTripName(e) {
+        let coachName = document.querySelector('#coachName');
+        let departureTime = document.querySelector('#departureTime');
+        document.querySelector('#name').value = `${routeName.value}, [${coachName.value}], [${departureTime.value}]`;
+    }
+
+</script>

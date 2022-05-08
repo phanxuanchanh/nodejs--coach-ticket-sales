@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>{{{pageName}}} - Bán vé xe khách XXX</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/bootstrap-5.1.3/css/bootstrap.min.css"/>
+        <script src="/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mynavbar">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about-us">Giới thiệu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:void(0)">Đi tới trang web chính</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/development-team-members">Thành viên nhóm</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex navbar-nav">
+                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm">
+                            <button class="btn btn-primary" type="button">Tìm</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-primary text-center">TRANG WEB BÁN VÉ XE KHÁCH CỦA CÔNG TY XXX</h3>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-12 col-md-12 col-lg-8">
+                    {{{body}}}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="text-success m-0 text-center">ĐIỀU HƯỚNG</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="m-0">Chức năng chính</p>
+                            <hr class="mt-0 mb-2"/>
+                            <a class="btn btn-success" href="/customer/buy-ticket">MUA VÉ</a>
+                            <a class="btn btn-success" href="#">HỦY VÉ</a>
+                            <a class="btn btn-success" href="#">CẬP NHẬT VÉ</a>
+                            <p class="mt-2 mb-0">Các chức năng khác dành cho khách hàng</p>
+                            <hr class="mt-0 mb-2"/>
+                            <a class="btn btn-success" href="#">CẬP NHẬT TÀI KHOẢN</a>
+                            <a class="btn btn-success" href="#">TÌM HÓA ĐƠN</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-light mt-3">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h4 class="mb-1">Về chúng tôi</h4>
+                    <hr class="mt-0 mb-2"/>
+                    <p style="text-align:justify;">Với hơn 10 năm vận hành các khai thác tuyến đường QL1A, QL14 với hàng ngàn lượt vận chuyển hành khách. Chúng tôi luôn đảm bảo sự thoải mái, tiện nghi, giá cả phải chăng khi sử dụng dịch vụ của chúng tôi. </p>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h4 class="mb-1">Đối tác</h4>
+                    <hr class="mt-0 mb-2"/>
+                    <img src="/images/MoMo_Logo.png" alt="Ví điện tử Momo" style="width:50px; height:50px;">
+                    <img src="/images/napas.jpeg" alt="Cổng thanh toán Napas" style="width:50px; height:50px;">
+                    <img src="/images/mastercard_logo.png" alt="Thẻ mastercard" style="width:50px; height:50px;">
+                    <img src="/images/visa.jpg" alt="Thẻ visa" style="width:50px; height:50px;">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h4 class="mb-1">Các tuyến đường chính</h4>
+                    <hr class="mt-0 mb-2"/>
+                    <ul>
+                        <li>Hồ Chí Minh <-> TX.An Khê, Gia Lai</li>
+                        <li>Hồ Chí Minh <-> TP.Buôn Ma Thuột, Đăk Lăk</li>
+                        <li>Hồ Chí Minh <-> Ngọc Hồi, Kon Tum</li>
+                        <li>Hồ Chí Minh <-> Tây Sơn, Bình Định</li>
+                        <li>Hồ Chí Minh <-> Đà Nẵng</li>
+                        <li>Hồ Chí Minh <-> Thừa Thiên Huế</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
