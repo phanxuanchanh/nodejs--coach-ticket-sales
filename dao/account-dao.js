@@ -21,7 +21,9 @@ class AccountDAO {
 
     getEmployees() {
         return new Promise((resolve, reject) => {
-            Account.find({ $or: [{ accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' }, { accountType: 'AssistantDriver' }] }, function (error, accounts) {
+            Account.find({ $or: [
+                { accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' }, 
+                { accountType: 'AssistantDriver' }] }, function (error, accounts) {
                 if (error)
                     reject(error);
 
@@ -33,7 +35,9 @@ class AccountDAO {
 
     searchCustomers(keyword) {
         return new Promise((resolve, reject) => {
-            Account.find({ $or: [{ fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, { phone: { $regex: keyword, $options: "i" } }] }, function (error, accounts) {
+            Account.find({ $and: [{ accountType: 'Customer' }, { $or: [
+                { fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, 
+                { phone: { $regex: keyword, $options: "i" } }] }] }, function (error, accounts) {
                 if (error)
                     reject(error);
 
@@ -44,7 +48,10 @@ class AccountDAO {
 
     searchEmployees(keyword) {
         return new Promise((resolve, reject) => {
-            Account.find({ $or: [{ fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, { phone: { $regex: keyword, $options: "i" } }] }, function (error, accounts) {
+            Account.find({ $and: [
+                { $or: [{ accountType: 'Conductor' }, { accountType: 'Employer' }, { accountType: 'CoachDriver' }, { accountType: 'AssistantDriver' }] }, 
+                { $or: [{ fullname: { $regex: keyword, $options: "i" } }, { email: { $regex: keyword, $options: "i" } }, { phone: { $regex: keyword, $options: "i" } }] }] }, 
+                function (error, accounts) {
                 if (error)
                     reject(error);
 
@@ -171,21 +178,21 @@ class AccountDAO {
         });
     }
 
-    addTicketOfCustomer(accountId, item) {
+    addTicketToCustomer(accountId, item) {
         return new Promise((resolve, reject) => {
-            Account.updateOne({ accountId: accountId }, { $push: { tickets: item } }, function (error, result) {
-                if (error)
-                    reject(error);
+            // Account.updateOne({ accountId: accountId }, { $push: { tickets: item } }, function (error, result) {
+            //     if (error)
+            //         reject(error);
 
 
-            });
+            // });
 
             Account.findOne({ accountId: accountId }, function (error, account) {
                 if (error) {
                     reject(error);
                 } else if (account) {
-                    //
-                    resolve(new QueryResult('Success',));
+                    console.log(account.tickets);
+                    resolve(new QueryResult('Success', account));
                 } else {
                     resolve(new QueryResult('NotFound', null));
                 }

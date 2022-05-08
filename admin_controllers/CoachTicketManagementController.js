@@ -1,4 +1,6 @@
 const coachTicketDAO = require('../dao/coach-ticket-dao');
+const accountDAO = require('../dao/account-dao');
+const coachTripDAO = require('../dao/coach-trip-dao');
 const { convertDateToString } = require('../utilities/datetime_utility');
 const mailUtility = require('../utilities/mail_utility');
 
@@ -63,7 +65,7 @@ class CoachTicketController {
         if(!req.session.admin)
             return res.redirect('/employee/sign-in');
 
-        coachTicketDAO.getAvailableSeatPositionList(req.params.coachTicketId).then(queryResult => {
+        coachTripDAO.getAvailableSeatPositionList(req.params.coachTripId).then(queryResult => {
             if(queryResult.status === 'NotFound')
                 return res.send('NotFound');
             
@@ -78,6 +80,8 @@ class CoachTicketController {
         if(req.method === 'GET')
             return res.render('./admin/coach-ticket-management/sell-ticket', { layout: 'admin', pageName: 'Bán vé cho khách hàng', adminInfo: req.session.admin });
         
+        accountDAO.addTicketToCustomer(req.body.customerId, req.body);
+
         coachTicketDAO.createCoachTicket(req.body).then(queryResult => {
             if(queryResult.status === 'Failed')
                 return res.render('./admin/coach-ticket-management/sell-ticket', {
