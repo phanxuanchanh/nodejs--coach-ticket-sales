@@ -76,6 +76,9 @@ class CoachTicketController {
         if(!req.session.admin)
             return res.redirect('/employee/sign-in');
 
+        if(req.session.admin.title !== 'Employer' && req.session.admin.title !== 'Conductor')
+            return res.redirect('/admin/customer-management/list?status=NoPermissionsAllowed');
+
         if(req.method === 'GET')
             return res.render('./admin/coach-ticket-management/sell-ticket', { layout: 'admin', pageName: 'Bán vé cho khách hàng', adminInfo: req.session.admin });
         
