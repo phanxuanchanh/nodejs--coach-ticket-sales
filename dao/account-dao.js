@@ -145,11 +145,11 @@ class AccountDAO {
 
     getAllTickets() {
         return new Promise((resolve, reject) => {
-            Account.aggregate([{ $unwind: "$Tickets" }, {
+            Account.aggregate([{ $unwind: '$Tickets' }, {
                 $project: {
-                    _id: 0, fullname: 1, email: 1, phone: 1, CoachTrip: "$Tickets.CoachTrip", TicketDetail: "$Tickets.TicketDetail",
-                    Payment: "$Tickets.Payment", coachTicketId: "$Tickets.coachTicketId", createdAt: "$Tickets.createdAt",
-                    updatedAt: "$Tickets.updatedAt"
+                    _id: 0, fullname: 1, email: 1, phone: 1, CoachTrip: '$Tickets.CoachTrip', TicketDetail: '$Tickets.TicketDetail',
+                    Payment: '$Tickets.Payment', coachTicketId: '$Tickets.coachTicketId', createdAt: '$Tickets.createdAt',
+                    updatedAt: '$Tickets.updatedAt'
                 }
             }], function (error, tickets) {
                 if (error)
@@ -168,11 +168,11 @@ class AccountDAO {
 
     getTicketByTicketId(ticketId) {
         return new Promise((resolve, reject) => {
-            Account.aggregate([{ $unwind: "$Tickets" }, {
+            Account.aggregate([{ $unwind: '$Tickets' }, {
                 $project: {
-                    _id: 0, fullname: 1, email: 1, phone: 1, CoachTrip: "$Tickets.CoachTrip", TicketDetail: "$Tickets.TicketDetail",
-                    Payment: "$Tickets.Payment", coachTicketId: "$Tickets.coachTicketId", createdAt: "$Tickets.createdAt",
-                    updatedAt: "$Tickets.updatedAt"
+                    _id: 0, fullname: 1, email: 1, phone: 1, CoachTrip: '$Tickets.CoachTrip', TicketDetail: '$Tickets.TicketDetail',
+                    Payment: '$Tickets.Payment', coachTicketId: '$Tickets.coachTicketId', createdAt: '$Tickets.createdAt',
+                    updatedAt: '$Tickets.updatedAt'
                 }
             }, { $match: { coachTicketId: ticketId } }], function (error, tickets) {
                 if (error) {
@@ -192,67 +192,103 @@ class AccountDAO {
         });
     }
 
-    getTicketsOfCustomer(accountId) {
-        return new Promise((resolve, reject) => {
-            Account.aggregate({
-                $project: {
-                    _id: 0,
-                    Tickets: 1
-                }
-            })
-
-            Account.aggregate({ $group: { _id: "$Tickets" } }, function (error, tickets) {
+    deleteTicket(ticketId){
+        return new Promise((resolve, reject) => { 
+            Account.count({ 'Tickets.coachTicketId': ticketId }, function(error, count){
                 if (error)
                     reject(error);
-
-                resolve(multipleMongooseToObject(tickets));
-            })
+                
+                if(count === 0){
+                    resolve(new QueryResult('NotFound', null));
+                }else{
+                    Account.updateMany({ }, { $pull: { Tickets: { coachTicketId: ticketId } } }, 
+                        { multi: true }, function(error2, result){
+                        if (error2)
+                            reject(error2);
+        
+                        Account.count({ "Tickets.coachTicketId": ticketId }, function(error3, count2){
+                            if (error3)
+                                reject(error3);
+                            
+                            if(count2 === 0)
+                                resolve(new QueryResult('Success', null));
+                            else
+                                resolve(new QueryResult('Failed', null));
+                        });
+                    });
+                }
+            });
         });
     }
 
-    getTicketOfCustomer(accountId, coachTicketId) {
+    deleteTicketFromCustomer(accountId, ticketId){
         return new Promise((resolve, reject) => {
-            Account.aggregate([
-                { $match: { "$accountId": accountId } },
-                {
-                    $project: {
-                        _id: 0,
-                        coachTicketId: "$Tickets.coachTicketId",
-                        CoachTrip: "$Tickets.CoachTrip",
-                        Employee: "$Tickets.Employee",
-                        TicketDetail: "$Ticket.TicketDetail",
-                        Payment: "$Ticket.Payment"
-                    }
-                }
-            ]), function (error, ticket) {
+            Account.updateOne({ accountId: accountId }, 
+                { $pull: { Tickets: { coachTicketId: ticketId } } }, { multi: true }, function(error, result){
                 if (error)
                     reject(error);
-                else if (ticket)
-                    resolve(new QueryResult('Success', mongooseToObject(ticket)));
-                else
+                console.log(result);
+                if(result.matchedCount == 0)
                     resolve(new QueryResult('NotFound', null));
-            }
+                else{
+                    if(result.modifiedCount == 0)
+                        resolve(new QueryResult('Failed', null));
+                    else
+                        resolve(new QueryResult('Success', null));
+                }
+            });
         });
     }
 
-    addTicketToCustomer(accountId, item) {
+    addTicketToCustomer(item) {
         return new Promise((resolve, reject) => {
-            // Account.updateOne({ accountId: accountId }, { $push: { tickets: item } }, function (error, result) {
-            //     if (error)
-            //         reject(error);
 
+            let newTicket = {
+                CoachTrip: {
+                    coachTripId: item.coachTripId,
+                    coachTripName: item.coachTripName,
+                    departureTime: item.departureTime,
+                    destinationTime: item.destinationTime,
+                    licensePlate: item.licensePlate
+                },
+                Employee: {
+                    employeeId: item.employeeId,
+                    employeeName: item.employeeName
+                },
+                TicketDetail: {
+                    seatPosition: item.seatPostion,
+                    price: item.price,
+                    subCharge: item.subCharge,
+                    note: item.note,
+                    totalMoney: item.totalMoney
+                },
+                Payment: {
+                    paymentMethod: item.paymentMethod,
+                    status: item.paymentStatus,
+                    transactionContent: item.transactionContent,
+                },
+                coachTicketId: md5(`${item.customerName}&${item.coachTripName}///${randomUtility.getRandomString(24)}`),
+                createdAt: new Date()
+            };
 
-            // });
+            if(item.paymentStatus === 'Success')
+                newTicket.Payment.purchaseDate = new Date();
 
-            Account.findOne({ accountId: accountId }, function (error, account) {
-                if (error) {
+            Account.updateOne({ accountId: item.customerId }, 
+                { $push: { Tickets: newTicket } }, { multi: true }, function(error, result){
+                if (error)
                     reject(error);
-                } else if (account) {
-                    console.log(account.tickets);
-                    resolve(new QueryResult('Success', account));
-                } else {
-                    resolve(new QueryResult('NotFound', null));
-                }
+
+                Account.count({ $and: [{ accountId:  item.customerId }, { "Tickets.coachTicketId": newTicket.coachTicketId }] }, 
+                function(error2, count){
+                    if(error2)
+                        reject(error2);
+                    
+                    if(count === 0)
+                        resolve(new QueryResult('Failed', null));
+                    else
+                        resolve(new QueryResult('Success', null));
+                });
             });
         });
     }
@@ -387,6 +423,21 @@ class AccountDAO {
                 }
 
                 resolve(count);
+            });
+        });
+    }
+
+    countTicket(){
+        return new Promise((resolve, reject) => {
+            Account.aggregate([{ $unwind: '$Tickets' }, { $group: { _id: null, count: { $sum: 1 } } } ], function(error, raw){
+                if (error) {
+                    reject(error);
+                }
+                
+                if(raw.length == 0)
+                    resolve(0);
+                else
+                    resolve(raw[0].count);
             });
         });
     }

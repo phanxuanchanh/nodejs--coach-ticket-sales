@@ -19,7 +19,7 @@ class MailUtility {
     }
 
     sendInvoice(coachTicket){
-        smtp.sendMailWithTemplate(coachTicket.Customer.email, 'Thông tin vé', 'invoice', {
+        smtp.sendMail(coachTicket.Customer.email, 'Thông tin vé', 'invoice', {
             coachTicket: coachTicket
         });
     }

@@ -64,8 +64,7 @@ class CoachTripDAO {
                         
                         let availableSeatPositionList = null;
                         let count = 0;
-                        if(rawResult.length > 0){
-                            console.log(rawResult);
+                        if(rawResult.length > 0){   
                             let seatPositionList = rawResult[0].seatPositions;
                             availableSeatPositionList = new Array(seatNumber - seatPositionList.length);
 

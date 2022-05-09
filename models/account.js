@@ -12,7 +12,7 @@ const ticket = new Schema({
         destinationTime: { type: Date },
         licensePlate: { type: String }
     },
-    Employees: {
+    Employee: {
         employeeId: { type: String },
         employeeName: { type: String }
     },
@@ -28,9 +28,8 @@ const ticket = new Schema({
         status: { type: String },
         transactionContent: { type: String },
         purchaseDate: { type: Date }
-    }
-},{
-    timestamps: true
+    },
+    createdAt: { type: Date }
 });
 
 

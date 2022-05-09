@@ -33,6 +33,8 @@ class CustomerManagementController {
 
         accountDAO.searchCustomers(req.query.keyword).then(customers => {
             for(let customer of customers){
+                customer.customerId = customer.accountId;
+                delete customer.accountId;
                 delete customer.password;
                 delete customer.isActivated;
                 delete customer.deleted;

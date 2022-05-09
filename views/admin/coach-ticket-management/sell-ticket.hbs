@@ -47,21 +47,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="customerId" name="Customer.customerId" />
+                            <input type="hidden" id="customerId" name="customerId" />
                             <div class="form-group">
-                                <label for="Customer.customerName">Tên khách hàng</label>
+                                <label for="customerName">Tên khách hàng</label>
                                 <input type="text" class="form-control" placeholder="Tên khách hàng" id="customerName"
-                                    name="Customer.customerName" required readonly />
+                                    name="customerName" required readonly />
                             </div>
                             <div class="form-group">
-                                <label for="Customer.phone">Số điện thoại</label>
+                                <label for="customerPhone">Số điện thoại</label>
                                 <input type="tel" class="form-control" placeholder="Số điện thoại" id="customerPhone"
-                                    name="Customer.phone" required />
+                                    name="customerPhone" required />
                             </div>
                             <div class="form-group">
-                                <label for="Customer.email">Email</label>
+                                <label for="customerEmail">Email</label>
                                 <input type="text" class="form-control" placeholder="Email" id="customerEmail"
-                                    name="Customer.email" required />
+                                    name="customerEmail" required />
                             </div>
                         </div>
                     </div>
@@ -94,26 +94,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="coachTripId" name="CoachTrip.coachTripId" />
+                            <input type="hidden" id="coachTripId" name="coachTripId" />
                             <div class="form-group">
-                                <label for="CoachTrip.coachTripName">Tên chuyến</label>
+                                <label for="coachTripName">Tên chuyến</label>
                                 <input type="text" class="form-control" placeholder="Tên chuyến" id="coachTripName"
-                                    name="CoachTrip.coachTripName" required readonly />
+                                    name="coachTripName" required readonly />
                             </div>
                             <div class="form-group">
-                                <label for="CoachTrip.departureTime">Thời gian đi</label>
+                                <label for="departureTime">Thời gian đi</label>
                                 <input type="tel" class="form-control" placeholder="Thời gian đi" id="departureTime"
-                                    name="CoachTrip.departureTime" required readonly />
+                                    name="departureTime" required readonly />
                             </div>
                             <div class="form-group">
-                                <label for="CoachTrip.destinationTime">Thời gian đến</label>
+                                <label for="destinationTime">Thời gian đến</label>
                                 <input type="text" class="form-control" placeholder="Thời gian đến" id="destinationTime"
-                                    name="CoachTrip.destinationTime" required readonly />
+                                    name="destinationTime" required readonly />
                             </div>
                             <div class="form-group">
-                                <label for="CoachTrip.licensePlate">Biển số xe</label>
+                                <label for="licensePlate">Biển số xe</label>
                                 <input type="text" class="form-control" placeholder="Biển số xe" id="licensePlate"
-                                    name="CoachTrip.licensePlate" required readonly />
+                                    name="licensePlate" required readonly />
                             </div>
                         </div>
                     </div>
@@ -123,12 +123,12 @@
                             <p class="text-center m-1">Thông tin nhân viên</p>
                         </div>
                         <div class="card-body">
-                            <input type="hidden" id="employeeId" name="Employee.employeeId"
+                            <input type="hidden" id="employeeId" name="employeeId"
                                 value="{{adminInfo.adminId}}" />
                             <div class="form-group">
-                                <label for="Employee.employeeName">Tên nhân viên</label>
+                                <label for="employeeName">Tên nhân viên</label>
                                 <input type="text" class="form-control" placeholder="Tên nhân viên" id="employeeName"
-                                    name="Employee.employeeName" value="{{adminInfo.fullname}}" required readonly />
+                                    name="employeeName" value="{{adminInfo.fullname}}" required readonly />
                             </div>
                         </div>
                     </div>
@@ -139,31 +139,31 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="TicketDetail.seatPositions">Chọn ghế ngồi</label>
+                                <label for="seatPositions">Chọn ghế ngồi</label>
                                 <select class="form-control mb-2" name="selectSeatPosition" id="selectSeatPosition"
                                     onchange="selectSeat();"></select>
                                 <input type="text" class="form-control" placeholder="Chọn ghế ngồi" id="seatPosition"
-                                    name="TicketDetail.seatPosition" required readonly />
+                                    name="seatPosition" required readonly />
                             </div>
                             <div class="form-group">
-                                <label for="TicketDetail.price">Giá vé cố định</label>
+                                <label for="price">Giá vé cố định</label>
                                 <input type="number" class="form-control" placeholder="Giá vé" id="price"
-                                    name="TicketDetail.price" value="0" required readonly />
+                                    name="price" value="0" required readonly />
                             </div>
                             <div class="form-group">
-                                <label for="TicketDetail.subCharge">Phụ thu</label>
+                                <label for="subCharge">Phụ thu</label>
                                 <input type="number" class="form-control" placeholder="Phụ thu" id="subCharge"
-                                    name="TicketDetail.subCharge" value="0" />
+                                    name="subCharge" value="0" />
                             </div>
                             <div class="form-group">
                                 <label for="note">Ghi chú</label>
                                 <input type="text" class="form-control" placeholder="Ghi chú" id="note"
-                                    name="TicketDetail.note" />
+                                    name="note" />
                             </div>
                             <div class="form-group">
-                                <label for="TicketDetail.totalMoney">Tổng tiền</label>
+                                <label for="totalMoney">Tổng tiền</label>
                                 <input type="number" class="form-control" placeholder="Tổng tiền" id="totalMoney"
-                                    name="TicketDetail.totalMoney" value="0" required readonly />
+                                    name="totalMoney" value="0" required readonly />
                             </div>
                         </div>
                     </div>
@@ -174,8 +174,8 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="Payment.paymentMethod">Phương thức thanh toán</label>
-                                <select name="Payment.paymentMethod" class="form-control">
+                                <label for="paymentMethod">Phương thức thanh toán</label>
+                                <select name="paymentMethod" class="form-control">
                                     <option value="Bank transfer">Chuyển khoản ngân hàng</option>
                                     <option value="Visa">Thẻ visa</option>
                                     <option value="Mastercard">Thẻ mastercard</option>
@@ -185,17 +185,17 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="Payment.status">Trạng thái thanh toán</label>
-                                <select name="Payment.status" class="form-control">
+                                <label for="paymentStatus">Trạng thái thanh toán</label>
+                                <select name="paymentStatus" class="form-control">
                                     <option value="Success">Thành công</option>
                                     <option value="Failed">Thất bại</option>
                                     <option value="Waiting">Đang chờ</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="Payment.transactionContent">Thông tin giao dịch</label>
+                                <label for="transactionContent">Thông tin giao dịch</label>
                                 <input type="text" class="form-control" placeholder="Thông tin giao dịch"
-                                    id="transactionContent" name="Payment.transactionContent" />
+                                    id="transactionContent" name="transactionContent" />
                             </div>
                         </div>
                     </div>
