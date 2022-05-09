@@ -1,4 +1,3 @@
-const coachTicketDAO = require('../dao/coach-ticket-dao');
 const accountDAO = require('../dao/account-dao');
 const coachTripDAO = require('../dao/coach-trip-dao');
 const { convertDateToString } = require('../utilities/datetime_utility');

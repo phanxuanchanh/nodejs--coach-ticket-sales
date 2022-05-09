@@ -227,7 +227,7 @@ class AccountDAO {
                 { $pull: { Tickets: { coachTicketId: ticketId } } }, { multi: true }, function(error, result){
                 if (error)
                     reject(error);
-                console.log(result);
+
                 if(result.matchedCount == 0)
                     resolve(new QueryResult('NotFound', null));
                 else{
