@@ -49,7 +49,7 @@ class CustomerManagementController {
         if(!req.session.admin)
             return res.redirect('/employee/sign-in');
 
-        accountDAO.getCustomer(req.params.accountId).then(queryResult => { console.log(req.params.accountId);
+        accountDAO.getCustomer(req.params.accountId).then(queryResult => { 
             if (queryResult.status === 'NotFound')
                 return res.redirect('/admin/customer-management/list');
 
