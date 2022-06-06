@@ -256,7 +256,7 @@ class AccountDAO {
                     employeeName: item.employeeName
                 },
                 TicketDetail: {
-                    seatPosition: item.seatPostion,
+                    seatPosition: item.seatPosition,
                     price: item.price,
                     subCharge: item.subCharge,
                     note: item.note,
